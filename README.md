@@ -18,4 +18,4 @@ O site foi pensado pra causar uma boa primeira impressão em até 5 segundos: id
 
 Contato
 
-📧 midnightdevs10@gmail.com
+midnightdevs10@gmail.com

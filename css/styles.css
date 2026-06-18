@@ -1097,7 +1097,8 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 8px;
+  gap: 8px;
+  padding: 12px 14px;
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 500;
@@ -1109,6 +1110,12 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   transition: all 0.25s var(--ease-out);
   cursor: default;
 }
+.chip svg {
+  flex-shrink: 0;
+  color: var(--night-blue);
+  transition: color 0.25s var(--ease-out);
+}
+.chip:hover svg { color: #fff; }
 .chip:hover {
   background: rgba(107, 140, 255, 0.10);
   border-color: var(--night-blue);
@@ -1403,7 +1410,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .pratica { margin-top: 24px; padding: 24px 18px; }
   .pratica-title { font-size: 18px; margin-bottom: 18px; }
   .pratica-chips { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .chip { padding: 10px 6px; font-size: 12px; }
+  .chip { padding: 10px 10px; font-size: 12px; gap: 6px; }
 
   /* Sub-head: menor no mobile */
   .subsection-head { margin-top: 36px; margin-bottom: 18px; }

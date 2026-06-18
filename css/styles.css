@@ -998,6 +998,12 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   display: block;
   margin-bottom: 6px;
 }
+.skill-desc {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
 .skill-card h3 {
   font-family: var(--font-display);
   font-size: 20px;
@@ -1023,6 +1029,91 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   background: var(--night-blue);
   flex-shrink: 0;
   box-shadow: 0 0 8px rgba(107, 140, 255, );
+}
+
+/* =========================================================
+   SUBSECTION HEAD (subtítulo dentro de uma seção maior)
+   ========================================================= */
+.subsection-head {
+  margin-top: 56px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.subsection-head h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin-top: 6px;
+}
+
+/* =========================================================
+   PRÁTICA (sub-bloco dentro de Capacidades)
+   ========================================================= */
+.pratica {
+  margin-top: 56px;
+  padding: 36px 28px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-bd);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.pratica::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(107, 140, 255, 0.08), transparent 60%);
+  pointer-events: none;
+}
+.pratica-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--night-blue);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.pratica-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 24px;
+  letter-spacing: -0.3px;
+}
+.pratica-chips {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  position: relative;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--glass-bd);
+  border-radius: 100px;
+  white-space: nowrap;
+  transition: all 0.25s var(--ease-out);
+  cursor: default;
+}
+.chip:hover {
+  background: rgba(107, 140, 255, 0.10);
+  border-color: var(--night-blue);
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 /* =========================================================
@@ -1195,6 +1286,9 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .team-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-title { letter-spacing: -1.5px; }
   .hero-line { letter-spacing: -1.5px; }
+
+  /* Chips "Na prática": 3 colunas no tablet */
+  .pratica-chips { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* Tablet portrait pequeno / mobile grande (≤720px) */
@@ -1304,6 +1398,16 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .skills-grid { grid-template-columns: 1fr; gap: 14px; }
   .skill-card { padding: 22px 20px; }
   .skill-card h3 { font-size: 18px; margin-bottom: 14px; padding-bottom: 12px; }
+
+  /* Prática: 2 colunas no mobile */
+  .pratica { margin-top: 24px; padding: 24px 18px; }
+  .pratica-title { font-size: 18px; margin-bottom: 18px; }
+  .pratica-chips { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .chip { padding: 10px 6px; font-size: 12px; }
+
+  /* Sub-head: menor no mobile */
+  .subsection-head { margin-top: 36px; margin-bottom: 18px; }
+  .subsection-head h3 { font-size: 18px; }
 
   /* Por que nos escolher */
   .why-grid { grid-template-columns: 1fr; gap: 14px; }

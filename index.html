@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Midnight Devs — Desenvolvimento fullstack, sistemas web, análise de dados e dashboards Power BI. Código que roda. Sem enrolação." />
+  <meta name="theme-color" content="#05060f" />
+
+  <meta property="og:title" content="Midnight Devs — Código que roda." />
+  <meta property="og:description" content="Fullstack, dados e BI. Soluções que funcionam de verdade." />
+  <meta property="og:type" content="website" />
+
+  <title>Midnight Devs</title>
+
+  <link rel="icon" type="image/jpeg" href="assets/logo_midnight.jpeg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Overlay de carregamento: cobre o site até a lua 3D estar pronta -->
+  <div class="preload" id="preload" aria-hidden="true">
+    <div class="preload-pulse"></div>
+  </div>
+
+  <!-- ============ STAGE: céu estrelado + aurora + lua ============ -->
+  <div class="stage" aria-hidden="true">
+    <div class="stars stars-a"></div>
+    <div class="stars stars-b"></div>
+    <div class="stars stars-c"></div>
+
+    <div class="aurora aurora-1"></div>
+    <div class="aurora aurora-2"></div>
+    <div class="aurora aurora-3"></div>
+
+    <div class="vignette"></div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a href="#hero" class="nav-logo" aria-label="Midnight Devs">
+      <img src="assets/logo_midnight.jpeg" alt="" />
+      <span>Midnight Devs</span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Navegação principal">
+      <a href="#sobre">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 21v-1a8 8 0 0116 0v1"/>
+        </svg>
+        <span>Sobre</span>
+      </a>
+      <a href="#equipe">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="8" r="3.5"/>
+          <path d="M3 20v-1a6 6 0 0112 0v1"/>
+          <circle cx="17" cy="8" r="3"/>
+          <path d="M15 14a5 5 0 016 5v1"/>
+        </svg>
+        <span>Equipe</span>
+      </a>
+      <a href="#stack">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"/>
+          <polyline points="8 6 2 12 8 18"/>
+        </svg>
+        <span>Stack</span>
+      </a>
+      <a href="#porque">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2l2.6 6.5 7 .6-5.3 4.7 1.6 6.9L12 17l-5.9 3.7 1.6-6.9L2.4 9.1l7-.6z"/>
+        </svg>
+        <span>Por que</span>
+      </a>
+      <a href="#contato" class="nav-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 7l9 6 9-6"/>
+        </svg>
+        <span>Falar conosco</span>
+      </a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main>
+
+    <!-- ============ HERO — CENA 3D DA LOGO ============ -->
+    <section id="hero" class="hero">
+      <!-- Wrapper 3D: tudo dentro inclina junto com o mouse (inércia pesada) -->
+      <div class="scene-3d" id="scene-3d">
+
+        <!-- Camada 2: LUA 3D real (WebGL via Three.js) -->
+        <div class="moon-scene" id="moon-scene">
+          <!-- Glow volumétrico (fica atrás do canvas, visível sempre) -->
+          <div class="moon-glow"></div>
+          <div class="moon-glow moon-glow-2"></div>
+          <div class="moon-glow moon-glow-3"></div>
+
+          <!-- Canvas WebGL: Three.js renderiza o modelo .glb da NASA aqui -->
+          <canvas id="moon-canvas"></canvas>
+
+          <!-- Loading state (some quando o modelo carrega) -->
+          <div class="moon-loading" id="moon-loading">carregando lua…</div>
+        </div>
+
+        <!-- Shooting stars (estrelas cadentes) -->
+        <div class="shooting-star"></div>
+        <div class="shooting-star shooting-star-2"></div>
+
+      </div>
+
+      <span class="hero-eyebrow hero-eyebrow-caption reveal" data-reveal>Midnight Devs — desde 2026</span>
+
+      <div class="hero-copy reveal" data-reveal>
+        <h1 class="hero-title">
+          <span class="hero-line">Código que roda.</span>
+          <span class="hero-line hero-line-accent">Sem enrolação.</span>
+        </h1>
+        <p class="hero-tagline">
+          Desenvolvemos sistemas web, dashboards e integrações sob medida.
+          Código em produção, no prazo, com comunicação direta — do jeito
+          que o seu projeto precisa.
+        </p>
+        <div class="hero-ctas">
+          <a href="#stack" class="btn btn-primary">Conheça nossos serviços <span class="btn-arrow">→</span></a>
+          <a href="#contato" class="btn btn-ghost">Falar com a gente</a>
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- ============ SOBRE ============ -->
+    <section id="sobre" class="section">
+      <div class="section-head reveal" data-reveal>
+        <span class="eyebrow">Sobre</span>
+        <h2>A Midnight Devs</h2>
+      </div>
+
+      <div class="sobre-grid">
+        <p class="sobre-text reveal" data-reveal>
+          A Midnight Devs é uma parceria entre dois engenheiros de software
+          focados em entregar valor real: sistemas web, dados e BI com qualidade
+          de produção. Trabalhamos com comunicação direta, prazos cumpridos e
+          código limpo.
+        </p>
+
+        <div class="sobre-logo reveal" data-reveal>
+          <div class="sobre-logo-frame">
+            <img src="assets/logo_midnight.jpeg" alt="Logo Midnight Devs" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EQUIPE ============ -->
+    <section id="equipe" class="section">
+      <div class="section-head reveal" data-reveal>
+        <span class="eyebrow">Equipe</span>
+        <h2>Nosso time</h2>
+      </div>
+
+      <div class="team-grid">
+
+        <article class="member-card reveal" data-reveal>
+          <div class="member-photo">
+            <img src="assets/davi_romeiro.jpeg" alt="Davi Alves Romeiro" />
+            <span class="member-glow"></span>
+          </div>
+          <div class="member-info">
+            <h3>Davi Alves Romeiro</h3>
+            <span class="member-role">Fullstack · IA · UX/UI</span>
+            <p>
+              Atua no front-end, na camada de IA e na experiência
+              do usuário. Trabalha com JS e TS
+              no front, integra modelos em Python e IA nos
+              fluxos do produto, e cria interfaces em UX/UI.
+            </p>
+            <div class="member-tags">
+              <span>JavaScript</span><span>TypeScript</span><span>Python</span><span>IA</span><span>UX/UI</span>
+            </div>
+            <div class="member-social">
+              <a href="https://www.linkedin.com/in/davi-alves-romeiro-334960344?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" aria-label="LinkedIn de Davi Alves Romeiro">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11-.01-4.12 2.06 2.06 0 01.01 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+                <span>LinkedIn</span>
+              </a>
+              <a href="https://github.com/davi-romeiro2" target="_blank" rel="noopener" aria-label="GitHub de Davi Alves Romeiro">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0012 .3z"/></svg>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="member-card reveal" data-reveal>
+          <div class="member-photo">
+            <img src="assets/miguel_sperandio.jpeg" alt="Evandro Miguel Martins Sperandio" />
+            <span class="member-glow"></span>
+          </div>
+          <div class="member-info">
+            <h3>Evandro Miguel Martins Sperandio</h3>
+            <span class="member-role">Fullstack · Dados · DevOps</span>
+            <p>
+              Atua no back-end, em dados e em infraestrutura.
+              Constrói APIs com Node.js e React, modela e
+              analisa dados com Power BI, e mantém o ambiente
+              de produção no ar com DevOps.
+            </p>
+            <div class="member-tags">
+              <span>React</span><span>Node.js</span><span>Power BI</span><span>Análise de Dados</span><span>DevOps</span>
+            </div>
+            <div class="member-social">
+              <a href="https://www.linkedin.com/in/evandro-miguel-martins-sperandio?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener" aria-label="LinkedIn de Evandro Miguel Martins Sperandio">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11-.01-4.12 2.06 2.06 0 01.01 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+                <span>LinkedIn</span>
+              </a>
+              <a href="https://github.com/evandromiguelsperandio2" target="_blank" rel="noopener" aria-label="GitHub de Evandro Miguel Martins Sperandio">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0012 .3z"/></svg>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ STACK ============ -->
+    <section id="stack" class="section">
+      <div class="section-head reveal" data-reveal>
+        <span class="eyebrow">Stack</span>
+        <h2>Stack &amp; expertise</h2>
+      </div>
+
+      <div class="skills-grid">
+
+        <div class="skill-card reveal" data-reveal>
+          <span class="skill-num">01</span>
+          <h3>Fullstack</h3>
+          <ul>
+            <li>JavaScript / TypeScript</li>
+            <li>React.js / Angular</li>
+            <li>Node.js</li>
+            <li>Python</li>
+            <li>SQL/NoSQL</li>
+          </ul>
+        </div>
+
+        <div class="skill-card reveal" data-reveal>
+          <span class="skill-num">02</span>
+          <h3>Dados &amp; BI</h3>
+          <ul>
+            <li>Power BI</li>
+            <li>Data Science</li>
+            <li>Big Data</li>
+            <li>ETL &amp; Analytics</li>
+          </ul>
+        </div>
+
+        <div class="skill-card reveal" data-reveal>
+          <span class="skill-num">03</span>
+          <h3>DevOps &amp; Cloud</h3>
+          <ul>
+            <li>Docker</li>
+            <li>Google Cloud Platform</li>
+            <li>Firebase</li>
+            <li>CI/CD &amp; automação</li>
+          </ul>
+        </div>
+
+        <div class="skill-card reveal" data-reveal>
+          <span class="skill-num">04</span>
+          <h3>Design &amp; Produto</h3>
+          <ul>
+            <li>Web Design</li>
+            <li>Design Gráfico</li>
+            <li>UX/UI</li>
+            <li>Dashboards &amp; DataViz</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ MANIFESTO ============ -->
+    <section id="manifesto" class="manifesto">
+      <p class="reveal" data-reveal>
+        <span class="accent">Software bem feito,</span> entregue no prazo, com código que sustenta o negócio.
+      </p>
+    </section>
+
+    <!-- ============ POR QUE NOS ESCOLHER ============ -->
+    <section id="porque" class="section">
+      <div class="section-head reveal" data-reveal>
+        <span class="eyebrow">Por que nos escolher</span>
+        <h2>Mais do que código, uma parceria</h2>
+      </div>
+
+      <div class="why-grid">
+
+        <div class="why-card reveal" data-reveal>
+          <div class="why-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M3 12h4M17 12h4M12 3v4M12 17v4"/>
+            </svg>
+          </div>
+          <h3>Visão de longo prazo</h3>
+          <p>Cada projeto é parte de uma trajetória maior. Pensamos além do escopo curto — construímos soluções que fazem sentido pro seu negócio amadurecer.</p>
+        </div>
+
+        <div class="why-card reveal" data-reveal>
+          <div class="why-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2l2.4 6.6h6.6L15.8 12l1.6 6.6L12 15l-5.4 3.6L8.2 12 3 8.6h6.6z"/>
+            </svg>
+          </div>
+          <h3>Responsabilidade real</h3>
+          <p>Cada entrega é tratada com cuidado, organização e foco em resultado. Se o seu projeto importa pra você, importa pra gente também.</p>
+        </div>
+
+        <div class="why-card reveal" data-reveal>
+          <div class="why-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 17l5-5 4 4 8-8"/>
+              <path d="M14 8h6v6"/>
+            </svg>
+          </div>
+          <h3>Evolução constante</h3>
+          <p>Aprendemos com cada desafio e aplicamos esse aprendizado nos próximos projetos. Quem trabalha com a gente evolui junto.</p>
+        </div>
+
+        <div class="why-card reveal" data-reveal>
+          <div class="why-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 00-3-3.87"/>
+              <path d="M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <h3>Parceria, não prestação</h3>
+          <p>Nosso compromisso é crescer junto com os projetos dos clientes. Entregamos qualidade hoje enquanto construímos a base do que queremos ser.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ CONTATO ============ -->
+    <section id="contato" class="section contact">
+      <div class="section-head reveal" data-reveal>
+        <span class="eyebrow">Contato</span>
+        <h2>Bora construir algo?</h2>
+      </div>
+      <p class="lead reveal" data-reveal>
+        Tem um sistema engavetado, um dashboard que precisa existir, ou uma ideia
+        esperando código? Manda mensagem.
+      </p>
+      <div class="contact-actions reveal" data-reveal>
+        <a href="mailto:midnightdevs10@gmail.com" class="btn btn-primary btn-lg">
+          midnightdevs10@gmail.com
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Midnight Devs</span>
+      <a class="footer-github" href="https://github.com/midnightdevs10" target="_blank" rel="noopener" aria-label="GitHub da Midnight Devs">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0012 .3z"/></svg>
+        <span>github.com/midnightdevs10</span>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Three.js + GLTFLoader — render 3D da lua via WebGL -->
+  <script src="https://unpkg.com/three@0.146.0/build/three.min.js" defer></script>
+  <script src="https://unpkg.com/three@0.146.0/examples/js/loaders/GLTFLoader.js" defer></script>
+  <script src="https://unpkg.com/three@0.146.0/examples/js/geometries/DecalGeometry.js" defer></script>
+  <!-- GSAP — animação timeline da rotação -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="js/moon-3d.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

@@ -809,163 +809,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 
 /* =========================================================
-   EQUIPE
-   ========================================================= */
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  align-items: stretch; /* garante que todos os cards tenham a mesma altura */
-}
-
-.member-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-bd);
-  border-radius: var(--radius);
-  padding: 28px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
-  position: relative;
-  overflow: hidden;
-  display: flex;          /* coluna: foto no topo, info ocupa o resto */
-  flex-direction: column;
-  text-align: center;    /* centraliza tudo por herança */
-}
-.member-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--night-blue), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.member-card:hover {
-  border-color: var(--glass-bd-hi);
-  background: rgba(255, 255, 255, 0.045);
-  box-shadow: 0 20px 50px rgba(107, 140, 255, );
-}
-.member-card:hover::before { opacity: 1; }
-
-.member-photo {
-  width: 110px; height: 110px;
-  margin: 0 auto 20px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-  border: 2px solid var(--glass-bd-hi);
-  box-shadow: 0 0 30px rgba(107, 140, 255, );
-}
-.member-photo img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s var(--ease-out);
-}
-.member-card:hover .member-photo img { transform: scale(1.06); }
-.member-glow {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(107, 140, 255, ) 0%, transparent 70%);
-  z-index: -1;
-}
-
-.member-card h3 {
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 4px;
-  letter-spacing: -0.3px;
-}
-.member-info {
-  display: flex;
-  flex-direction: column;
-  flex: 1; /* ocupa o resto da altura do card (depois da foto) */
-}
-.member-role {
-  display: block;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--night-blue);
-  margin-bottom: 16px;
-  font-weight: 500;
-}
-.member-card > p {
-  color: var(--text-dim);
-  font-size: 14px;
-  line-height: 1.65;
-  text-align: center;
-  margin-bottom: 18px;
-  min-height: 4.5em;       /* reserva espaço de 4 linhas — mantém os botões na mesma altura */
-}
-.member-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  justify-content: center;
-  align-items: center;
-  align-self: center;        /* centraliza dentro do .member-info (flex column) */
-  max-width: 100%;
-  margin-bottom: 4px;        /* folga extra antes da linha divisória */
-}
-.member-tags span {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  padding: 7px 12px;         /* mais espaço vertical (era 4px 9px) e horizontal */
-  border-radius: 100px;
-  background: rgba(107, 140, 255, );
-  border: 1px solid rgba(107, 140, 255, );
-  color: var(--night-blue);
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-/* Social links (LinkedIn + GitHub) — abaixo das tags, como pílulas */
-.member-social {
-  display: flex;              /* vira flex de novo pra permitir min-width igual nos botões */
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;           /* cola no rodapé do .member-info (flex column) */
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 16px;
-  border-top: 1px solid var(--glass-bd);
-  width: 100%;
-}
-.member-social a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  flex: 1;                   /* divide o espaço igualmente: ambos botões do mesmo tamanho */
-  max-width: 130px;          /* limite pra não ficarem exagerados em telas largas */
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  color: var(--text-dim);
-  padding: 7px 12px;
-  border-radius: 100px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-bd);
-  transition: all 0.25s var(--ease-out);
-  text-align: center;
-}
-.member-social a:hover {
-  color: var(--night-blue);
-  border-color: rgba(107, 140, 255, 0.4);
-  background: rgba(107, 140, 255, 0.08);
-  transform: translateY(-1px);
-}
-.member-social svg { flex-shrink: 0; }
-
-/* =========================================================
    SKILLS (stack)
    ========================================================= */
 .skills-grid {
@@ -1290,7 +1133,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 /* Tablet portrait (≤900px) */
 @media (max-width: 900px) {
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .team-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-title { letter-spacing: -1.5px; }
   .hero-line { letter-spacing: -1.5px; }
 
@@ -1395,12 +1237,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .sobre-text { font-size: 15px; text-align: center; order: 2; }
   .sobre-logo { justify-content: center; order: 1; margin-bottom: 8px; }
 
-  /* Team */
-  .team-grid { grid-template-columns: 1fr; gap: 18px; }
-  .member-card { padding: 24px 22px; }
-  .member-photo { width: 96px; height: 96px; margin-bottom: 16px; }
-  .member-card h3 { font-size: 18px; }
-
   /* Skills */
   .skills-grid { grid-template-columns: 1fr; gap: 14px; }
   .skill-card { padding: 22px 20px; }
@@ -1444,7 +1280,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .hero { padding: 80px 16px 40px; }
   .section { padding: 36px 16px; }
   .manifesto { padding: 40px 16px; }
-  .member-card { padding: 22px 18px; }
   .skill-card { padding: 20px 18px; }
 
   .scene-3d { height: 300px; }
@@ -1453,9 +1288,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .hero-line { font-size: clamp(32px, 11vw, 56px); }
   h2 { font-size: 24px !important; }
   .manifesto p { font-size: clamp(22px, 7.5vw, 36px); }
-
-  .member-tags span { font-size: 10px; padding: 3px 8px; }
-  .member-social a { font-size: 10.5px; padding: 6px 10px; }
 
   /* Em mobile, esconde o "Análise de Dados" longo nas tags pra caber melhor */
   /* (não dá pra fazer sem mexer no HTML, mas reduzimos fonte) */

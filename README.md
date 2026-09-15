@@ -7,7 +7,6 @@ A página apresenta quem somos, no que trabalhamos, nossa stack e formas de cont
 O que você vai encontrar
 
 - Sobre a Midnight Devs — nossa forma de trabalhar e o que nos diferencia
-- Equipe — apresentação dos sócios e suas especialidades
 - Stack & expertise — fullstack, dados/BI, DevOps, design e produto
 - Por que nos escolher — nossos valores como parceria
 - Contato — canal direto pra conversarmos sobre seu projeto

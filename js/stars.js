@@ -74,17 +74,22 @@
      --------------------------------------------------------- */
   let lastY = window.scrollY;
   let vSmooth = 0;            // px/frame, suavizado
-  const V_SMOOTHING = 0.14;   // quanto da velocidade entra por frame
-  const V_MAX = 80;           // teto da velocidade (evita rastro gigante)
-  const TRAIL = 0.75;         // comprimento do rastro por px de velocidade
-  const DRIFT = 0.4;          // deslocamento da estrela na direção do movimento
+  const V_ATTACK = 0.30;      // sobe rápido enquanto scrolla
+  const V_RELEASE = 0.982;    // decai devagar: cauda longa após parar
+  const V_MAX = 110;          // teto da velocidade (evita rastro gigante)
+  const TRAIL = 1.5;          // comprimento do rastro por px de velocidade
+  const DRIFT = 0.55;         // deslocamento da estrela na direção do movimento
 
   function readScroll() {
     const y = window.scrollY;
     const v = y - lastY;
     lastY = y;
-    // suaviza; quando o scroll para, v vira 0 e vSmooth decai sozinho frame a frame
-    vSmooth += (v - vSmooth) * V_SMOOTHING;
+    // ataque rápido, solto lento: o rastro persiste ~2-3s depois de parar
+    if (Math.abs(v) > Math.abs(vSmooth)) {
+      vSmooth += (v - vSmooth) * V_ATTACK;
+    } else {
+      vSmooth *= V_RELEASE;
+    }
     if (vSmooth > V_MAX) vSmooth = V_MAX;
     if (vSmooth < -V_MAX) vSmooth = -V_MAX;
   }
@@ -110,8 +115,8 @@
         // twinkle (mesma ideia do animation CSS antigo)
         const tw = 0.55 + 0.45 * Math.sin(t * 0.001 * s.twinkleSpeed + s.phase);
         a *= tw;
-        // acende um pouco durante o rastro pra não sumir
-        if (len !== 0) a = Math.min(1, a * (1 + Math.min(Math.abs(len) / 40, 1) * 0.6));
+        // acende bem durante o rastro
+        if (len !== 0) a = Math.min(1, a * (1 + Math.min(Math.abs(len) / 60, 1) * 1.4));
       }
 
       if (Math.abs(len) < 2) {
@@ -123,19 +128,20 @@
       } else {
         // rastro: gradiente do ponto (cabeça) até o fim da linha (cauda)
         const grad = ctx.createLinearGradient(x, y, x, y + len);
-        grad.addColorStop(0, `rgba(${s.color}, ${(a * 0.9).toFixed(3)})`);
+        grad.addColorStop(0, `rgba(${s.color}, ${Math.min(1, a).toFixed(3)})`);
+        grad.addColorStop(0.55, `rgba(${s.color}, ${(a * 0.45).toFixed(3)})`);
         grad.addColorStop(1, `rgba(${s.color}, 0)`);
         ctx.strokeStyle = grad;
-        ctx.lineWidth = s.r * 1.4;
+        ctx.lineWidth = s.r * 1.9;
         ctx.lineCap = 'round';
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x, y + len);
         ctx.stroke();
-        // cabeça do rastro: a própria estrela
-        ctx.fillStyle = `rgba(${s.color}, ${Math.min(1, a + 0.15).toFixed(3)})`;
+        // cabeça do rastro: a própria estrela, brilhante
+        ctx.fillStyle = `rgba(${s.color}, ${Math.min(1, a + 0.25).toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(x, y, s.r, 0, Math.PI * 2);
+        ctx.arc(x, y, s.r * 1.15, 0, Math.PI * 2);
         ctx.fill();
       }
     }

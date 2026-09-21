@@ -29,9 +29,7 @@
 
   <!-- ============ STAGE: céu estrelado + aurora + lua ============ -->
   <div class="stage" aria-hidden="true">
-    <div class="stars stars-a"></div>
-    <div class="stars stars-b"></div>
-    <div class="stars stars-c"></div>
+    <canvas id="stars-canvas"></canvas>
 
     <div class="aurora aurora-1"></div>
     <div class="aurora aurora-2"></div>
@@ -510,6 +508,7 @@
   <!-- GSAP — animação timeline da rotação -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="js/moon-3d.js" defer></script>
+  <script src="js/stars.js" defer></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

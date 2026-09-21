@@ -80,104 +80,14 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
     linear-gradient(180deg, var(--sky-0) 0%, var(--sky-1) 45%, var(--sky-2) 100%);
 }
 
-/* ---------- Starfield (centenas de pontinhos via box-shadow) ---------- */
-.stars {
+/* ---------- Starfield em canvas (pontinhos que viram rastros no scroll) ---------- */
+#stars-canvas {
   position: absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: transparent;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
   pointer-events: none;
-  will-change: opacity, transform;
-}
-/* Camada A: estrelas pequenas e mÃ©dias, twinkle rÃ¡pido */
-.stars-a {
-  top: 0; left: 0;
-  box-shadow:
-    23px 41px #fff, 89px 152px #fff, 134px 78px #fff, 201px 234px #fff, 267px 89px #fff,
-    334px 178px #fff, 412px 56px #fff, 478px 234px #fff, 545px 145px #fff, 612px 289px #fff,
-    678px 67px #fff, 745px 198px #fff, 812px 312px #fff, 878px 134px #fff, 945px 256px #fff,
-    23px 312px #fff, 89px 423px #fff, 134px 489px #fff, 201px 367px #fff, 267px 512px #fff,
-    334px 445px #fff, 412px 523px #fff, 478px 389px #fff, 545px 467px #fff, 612px 534px #fff,
-    678px 412px #fff, 745px 478px #fff, 812px 556px #fff, 878px 423px #fff, 945px 489px #fff,
-    23px 645px #fff, 89px 712px #fff, 134px 678px #fff, 201px 734px #fff, 267px 656px #fff,
-    334px 723px #fff, 412px 689px #fff, 478px 745px #fff, 545px 712px #fff, 612px 678px #fff,
-    678px 756px #fff, 745px 689px #fff, 812px 723px #fff, 878px 745px #fff, 945px 712px #fff,
-    1012px 89px #fff, 1078px 178px #fff, 1145px 234px #fff, 1212px 67px #fff, 1278px 198px #fff,
-    1345px 312px #fff, 1412px 145px #fff, 1478px 256px #fff, 1545px 89px #fff, 1612px 234px #fff,
-    1012px 412px #fff, 1078px 489px #fff, 1145px 367px #fff, 1212px 534px #fff, 1278px 423px #fff,
-    1345px 556px #fff, 1412px 389px #fff, 1478px 467px #fff, 1545px 512px #fff, 1612px 445px #fff,
-    1012px 678px #fff, 1078px 734px #fff, 1145px 689px #fff, 1212px 712px #fff, 1278px 745px #fff,
-    1345px 689px #fff, 1412px 723px #fff, 1478px 756px #fff, 1545px 678px #fff, 1612px 712px #fff;
-  animation: twinkle-a 4s ease-in-out infinite;
-}
-.stars-a::before, .stars-a::after {
-  content: '';
-  position: absolute;
-  width: 1px; height: 1px;
-  border-radius: 50%;
-  top: 0; left: 0;
-}
-.stars-a::before {
-  box-shadow:
-    56px 23px #fff, 178px 67px #fff, 234px 134px #fff, 312px 23px #fff, 389px 178px #fff,
-    467px 89px #fff, 545px 234px #fff, 623px 134px #fff, 701px 67px #fff, 789px 178px #fff,
-    867px 234px #fff, 945px 89px #fff, 1012px 178px #fff, 1089px 67px #fff, 1167px 234px #fff,
-    1245px 134px #fff, 1323px 23px #fff, 1401px 178px #fff, 1478px 89px #fff, 1556px 234px #fff,
-    56px 312px #fff, 178px 423px #fff, 234px 489px #fff, 312px 367px #fff, 389px 512px #fff,
-    467px 445px #fff, 545px 523px #fff, 623px 389px #fff, 701px 467px #fff, 789px 534px #fff,
-    867px 412px #fff, 945px 478px #fff, 1012px 556px #fff, 1089px 423px #fff, 1167px 489px #fff,
-    1245px 367px #fff, 1323px 512px #fff, 1401px 445px #fff, 1478px 523px #fff, 1556px 389px #fff,
-    56px 645px #fff, 178px 712px #fff, 234px 678px #fff, 312px 734px #fff, 389px 656px #fff,
-    467px 723px #fff, 545px 689px #fff, 623px 745px #fff, 701px 712px #fff, 789px 678px #fff,
-    867px 756px #fff, 945px 689px #fff, 1012px 723px #fff, 1089px 745px #fff, 1167px 712px #fff,
-    1245px 678px #fff, 1323px 756px #fff, 1401px 689px #fff, 1478px 723px #fff, 1556px 745px #fff;
-  animation: twinkle-b 6s ease-in-out infinite;
-}
-.stars-a::after {
-  box-shadow:
-    112px 56px #fff, 256px 178px #fff, 378px 89px #fff, 489px 234px #fff, 601px 134px #fff,
-    712px 23px #fff, 823px 178px #fff, 934px 67px #fff, 1045px 234px #fff, 1156px 89px #fff,
-    1267px 178px #fff, 1378px 134px #fff, 1489px 23px #fff, 1600px 234px #fff,
-    112px 367px #fff, 256px 489px #fff, 378px 412px #fff, 489px 523px #fff, 601px 445px #fff,
-    712px 367px #fff, 823px 512px #fff, 934px 489px #fff, 1045px 423px #fff, 1156px 534px #fff,
-    1267px 412px #fff, 1378px 467px #fff, 1489px 389px #fff, 1600px 512px #fff,
-    112px 678px #fff, 256px 745px #fff, 378px 712px #fff, 489px 689px #fff, 601px 734px #fff,
-    712px 678px #fff, 823px 756px #fff, 934px 712px #fff, 1045px 689px #fff, 1156px 745px #fff,
-    1267px 723px #fff, 1378px 678px #fff, 1489px 745px #fff, 1600px 712px #fff;
-  animation: twinkle-c 8s ease-in-out infinite;
-}
-/* Camada B: estrelas maiores e mais brilhantes */
-.stars-b {
-  top: 0; left: 0;
-  width: 3px; height: 3px;
-  box-shadow:
-    145px 89px #fff, 367px 234px #fff, 589px 67px #fff, 812px 178px #fff, 1034px 312px #fff,
-    1256px 134px #fff, 145px 489px #fff, 367px 534px #fff, 589px 412px #fff, 812px 556px #fff,
-    1034px 423px #fff, 1256px 467px #fff, 145px 712px #fff, 367px 678px #fff, 589px 745px #fff;
-  animation: twinkle-b 5s ease-in-out infinite;
-}
-/* Camada C: estrelas grandes brilhantes + ciano (raras) */
-.stars-c {
-  top: 0; left: 0;
-  width: 3px; height: 3px;
-  box-shadow:
-    289px 145px #fff, 678px 312px #fff, 1012px 234px #fff, 289px 567px #fff, 678px 489px #fff,
-    1012px 678px #fff,
-    412px 89px #6b8cff, 845px 178px #6b8cff, 1234px 89px #6b8cff;
-  animation: twinkle-c 7s ease-in-out infinite;
-}
-@keyframes twinkle-a {
-  0%, 100% { opacity: 0.7; }
-  50%      { opacity: 1.0; }
-}
-@keyframes twinkle-b {
-  0%, 100% { opacity: 0.4; }
-  50%      { opacity: 0.9; }
-}
-@keyframes twinkle-c {
-  0%, 100% { opacity: 0.6; }
-  50%      { opacity: 1.0; }
 }
 
 /* ---------- Aurora (3 camadas, parallax sutil com mouse) ---------- */

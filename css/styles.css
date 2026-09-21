@@ -1062,6 +1062,302 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 
 /* =========================================================
+   PROJETOS
+   Card em destaque com mockup de navegador + slot "próximo projeto"
+   ========================================================= */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+/* ---------- Card do projeto (destaque) ---------- */
+.proj-card {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 40px;
+  align-items: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-bd);
+  border-radius: var(--radius);
+  padding: 36px 34px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: all 0.3s var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+/* Halo azul atrás do card (visível de leve, acende no hover) */
+.proj-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 30%, rgba(107, 140, 255, 0.10), transparent 55%);
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.proj-card:hover {
+  border-color: var(--glass-bd-hi);
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 24px 60px rgba(107, 140, 255, 0.10);
+}
+.proj-card:hover::before { opacity: 1; }
+
+.proj-info { position: relative; }
+
+/* Status "entregue" com ponto pulsante */
+.proj-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--night-blue);
+  margin-bottom: 16px;
+}
+.proj-status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--night-blue);
+  box-shadow: 0 0 10px rgba(107, 140, 255, 0.9);
+  animation: proj-pulse 2.2s ease-in-out infinite;
+}
+@keyframes proj-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.8); }
+}
+
+.proj-card h3 {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.proj-desc {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.65;
+  margin-bottom: 20px;
+  max-width: 480px;
+}
+
+/* Tags do projeto */
+.proj-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.proj-tags li {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  padding: 6px 13px;
+  border-radius: 100px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-bd);
+  color: var(--text-dim);
+}
+
+/* Link CTA do card */
+.proj-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(107, 140, 255, 0.35);
+  background: rgba(107, 140, 255, 0.10);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.25s var(--ease-out);
+}
+.proj-link svg { transition: transform 0.25s var(--ease-out); }
+.proj-link:hover {
+  background: rgba(107, 140, 255, 0.2);
+  border-color: var(--night-blue);
+  box-shadow: 0 0 24px rgba(107, 140, 255, 0.25);
+}
+.proj-link:hover svg { transform: translate(2px, -2px); }
+
+/* ---------- Mockup de navegador ---------- */
+.proj-shot {
+  display: block;
+  position: relative;
+  border-radius: var(--radius-sm);
+  transition: transform 0.35s var(--ease-out);
+}
+.proj-shot:hover { transform: translateY(-4px) rotate(-0.5deg); }
+
+.proj-browser {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--glass-bd);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(107, 140, 255, 0.08);
+  transition: box-shadow 0.35s var(--ease-out), border-color 0.35s;
+}
+.proj-shot:hover .proj-browser {
+  border-color: rgba(107, 140, 255, 0.4);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.5),
+    0 0 50px rgba(107, 140, 255, 0.18);
+}
+
+.proj-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--glass-bd);
+}
+.proj-browser-bar .dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  flex-shrink: 0;
+}
+.proj-url {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 100px;
+  padding: 4px 14px;
+  margin-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+}
+
+.proj-screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--sky-1);
+}
+.proj-screen > img:first-child {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--ease-out);
+}
+.proj-shot:hover .proj-screen > img:first-child { transform: scale(1.04); }
+
+/* Selo com a logo do cliente, sobreposto no canto */
+.proj-logo-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  width: 74px;
+  height: auto;
+  border-radius: 10px;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45));
+  transition: transform 0.35s var(--ease-out);
+}
+.proj-shot:hover .proj-logo-badge { transform: scale(1.06) rotate(-2deg); }
+
+/* Brilho que varre a tela no hover */
+.proj-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.14) 48%, transparent 62%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.proj-shot:hover .proj-shine {
+  animation: proj-shine 0.9s var(--ease-out) forwards;
+}
+@keyframes proj-shine {
+  to { transform: translateX(120%); }
+}
+
+/* ---------- Slot "próximo projeto" ---------- */
+.proj-next {
+  text-align: center;
+  padding: 44px 28px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius);
+  background: transparent;
+  transition: all 0.3s var(--ease-out);
+}
+.proj-next:hover {
+  border-color: rgba(107, 140, 255, 0.45);
+  background: rgba(107, 140, 255, 0.04);
+}
+.proj-next-icon {
+  width: 54px; height: 54px;
+  margin: 0 auto 16px;
+  border-radius: 14px;
+  background: rgba(107, 140, 255, 0.10);
+  border: 1px solid rgba(107, 140, 255, 0.25);
+  color: var(--night-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease-out);
+}
+.proj-next:hover .proj-next-icon {
+  background: rgba(107, 140, 255, 0.18);
+  border-color: rgba(107, 140, 255, 0.5);
+  box-shadow: 0 0 22px rgba(107, 140, 255, 0.3);
+  transform: translateY(-3px);
+}
+.proj-next h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.proj-next p {
+  font-size: 14px;
+  color: var(--text-dim);
+  max-width: 440px;
+  margin: 0 auto 22px;
+}
+
+/* ---------- Responsivo da seção Projetos ---------- */
+@media (max-width: 900px) {
+  .proj-card {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 28px 24px;
+  }
+  /* No mobile, o mockup vem primeiro (mais chamativo) */
+  .proj-shot { order: -1; }
+  .proj-desc { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .proj-card { padding: 22px 18px; }
+  .proj-logo-badge { width: 58px; bottom: 10px; right: 10px; }
+  .proj-url { font-size: 10px; padding: 3px 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proj-status-dot { animation: none; }
+  .proj-shot:hover .proj-shine { animation: none; }
+  .proj-card,
+  .proj-shot,
+  .proj-screen > img:first-child,
+  .proj-logo-badge { transition: none; }
+}
+
+/* =========================================================
    CONTATO
    ========================================================= */
 .contact {
